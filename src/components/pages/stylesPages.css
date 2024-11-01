@@ -11,6 +11,7 @@ video {
 .hero-container {
   /* background: url("../images/img-6.jpg") center center/cover no-repeat; */
   /*overflow: auto;*/
+  padding-top: 100px;
   height: 561px;
   width: 100%;
   display: flex;
@@ -246,7 +247,7 @@ video {
   }
 
   .projects-container {
-    padding-top: 120px !important;
+    padding-top: 480px !important;
     height: 1032.9px;
     font-size: 10px !important;
     width: 100%;
@@ -290,7 +291,7 @@ video {
   }
 
   .projects-container {
-    margin-top: 250px !important;
+    padding-top: 650px !important;
   }
 
   .personal-skills {
@@ -309,13 +310,13 @@ video {
   }
 
   .contact-container {
-    margin-top: 100px !important;
+    padding-top: 100px !important;
   }
 }
 
 @media screen and (max-width: 900px) {
   .projects-container {
-    margin-top: 250px;
+    padding-top: 250px;
   }
 
   .programming-skills {

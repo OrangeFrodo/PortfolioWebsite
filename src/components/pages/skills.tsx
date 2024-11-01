@@ -20,6 +20,17 @@ export default function Skills() {
         { name: "Dart", bgcolor: "#6553FF", completed: 33 },        // Dart
     ];
 
+    const devOpsSkills = [
+        { name: "Kubernetes", bgcolor: "#6553FF", completed: 72 },
+        { name: "Microk8s", bgcolor: "#6553FF", completed: 70 },
+        { name: "Minikube", bgcolor: "#6553FF", completed: 68 },
+        { name: "Docker", bgcolor: "#6553FF", completed: 68 },
+        { name: "Ansible", bgcolor: "#6553FF", completed: 66 },
+        { name: "Vagrant", bgcolor: "#6553FF", completed: 64 },
+        { name: "Argo CD", bgcolor: "#6553FF", completed: 60 },
+        { name: "Treafik", bgcolor: "#6553FF", completed: 59 },
+    ]
+
     const personalSkills = [
         { name: "English", level: "C1" },
         { name: "Chinese", level: "A2" },
@@ -37,11 +48,23 @@ export default function Skills() {
                         <><ProgressBar name={item.name} key={idx} bgcolor={item.bgcolor} completed={item.completed} /> </>
                     ))}
                 </div>
+            </div>
+
+            <div className="skills-container-v1" >
+                <h1 className='skills-container-h1-pos1'>DevOps skills</h1>
+                <div className='skills-list' style={{ marginTop: 30 }}>
+                    {devOpsSkills.map((item, idx) => (
+                        <><ProgressBar name={item.name} key={idx} bgcolor={item.bgcolor} completed={item.completed} /> </>
+                    ))}
+                </div>
                 <div>
                     <p style={{ color: "#808080", margin: 0, marginTop: 20 }}>// I evaluated my skills on personal preferences, number of projects and overall confidence.</p>
                     <p style={{ color: "#808080", margin: 0 }}>// Nevertheless, as you can see I prefere working in React.</p>
                 </div>
             </div>
+
+
+
             <div className="skills-container-v2">
                 <h1 className='skills-container-h1-pos1' >Personal skills</h1>
                 <div className="personal-skills">

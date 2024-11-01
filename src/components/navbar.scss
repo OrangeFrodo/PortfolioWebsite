@@ -1,0 +1,152 @@
+
+
+@mixin breakpoint($point) {
+    @if $point == md {
+        // 768px
+        @media (min-width: 55em) {
+            @content;
+        }
+    }
+}
+.header {
+    background: rgb(0, 0, 0);
+    
+    width: 100%;
+    height: 100px;
+    padding: 0;
+    @include breakpoint(md) {
+        padding: 0;
+        // padding-left: 50px;
+    }
+    transition: 0.3s ease all;
+    position: fixed;
+    z-index: 1000;
+
+    &__content {
+        overflow: hidden;
+        color: #fff;
+        margin: 0 auto;
+        max-width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky !important;
+        z-index: 500;
+
+        &__logo {
+            font-size: 2rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: #fff;
+            padding-left: 5%;
+        }
+
+        &__nav {
+            top: 0;
+            right: 100%;
+            bottom: 0;
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: rgba(rgb(32, 32, 32), 0.9);
+            transform: translate(0);
+            transition: 0.3s ease transform;
+
+            @include breakpoint(md) {
+                transform: none;
+                flex-direction: row;
+                background: transparent;
+                width: auto;
+                height: 100%;
+                position: static;
+            }
+            ul {
+                list-style: none;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 32px;
+                @include breakpoint(md) {
+                    flex-direction: row;
+                    align-items: center;
+                    margin-bottom: 0;
+                    margin-right: calc(0.5rem + #{16px});
+                }
+                li {
+                    &:not(:last-child) {
+                        margin-bottom: 32px;
+                        @include breakpoint(md) {
+                            margin-bottom: 0;
+                            margin-right: 16px;
+                        }
+                    }
+                    a {
+                        text-decoration: none;
+                        color: inherit;
+                        padding: 0.75rem 1.25rem;
+                        border-radius: 12px;
+                        transition: 0.3s ease all;
+                        &:hover {
+                            background: rgba(#7f7f7f, 0.1);
+                        }
+                        &:active {
+                            border-radius: calc(#{12px} + 6px);
+                            background: linear-gradient(rgba(#7f7f7f, 0.1), rgba(#fff, 0.2));
+                        }
+                    }
+                }
+            }
+            .btn {
+                cursor: pointer;
+                outline: none;
+                padding: 0.75rem 1.25rem;
+                border-radius: 12px;
+                font-size: 1rem;
+                font-family: inherit;
+                background: rgb(162, 162, 246);
+                color: rgb(32, 32, 32);
+                border: 1px solid transparent;
+                transition: 0.3s ease all;
+                margin: 0.50em 0.50em;
+                &:hover {
+                    border-color: rgb(162, 162, 246);
+                    background: rgba(rgb(162, 162, 246), 0.1);
+                    color: rgb(162, 162, 246);
+                }
+                &:active {
+                    border-color: rgb(162, 162, 246);
+                    background: linear-gradient(rgba(rgb(162, 162, 246), 0.2), rgba(rgb(162, 162, 246), 0.3));
+                    color: rgb(162, 162, 246);
+                }
+                &__login {
+                    background-color: rgb(32, 32, 32);
+                    color: #fff;
+                }
+            }
+            &.isMenu {
+                transform: translate(100%);
+            }
+        }
+        &__toggle {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-size: 2rem;
+            margin-right: 5%;
+            transition: 0.3s ease all;
+            position: relative;
+            &:hover {
+                color: rgb(162, 162, 246);
+            }
+            @include breakpoint(md) {
+                display: none;
+            }
+        }
+    }
+}
