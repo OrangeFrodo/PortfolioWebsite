@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BiMenuAltRight } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
-import { Link } from "react-router-dom";
 import "./navbar.scss";
 
 function Navbar2() {
@@ -10,6 +9,7 @@ function Navbar2() {
     width: 0,
     height: 0,
   });
+  
   useEffect(() => {
     const handleResize = () => {
       setSize({
@@ -18,7 +18,6 @@ function Navbar2() {
       });
     };
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -35,7 +34,7 @@ function Navbar2() {
   return (
     <header className="header navbarheader">
       <div className="header__content">
-        <a href="#domov" className="header__content__logo">PortWeb</a>
+        <a href="#/" className="header__content__logo">Portfolio</a>
         <nav
           className={`${"header__content__nav"} 
           ${menuOpen && size.width < 768 ? `${"isMenu"}` : ""} 
@@ -43,7 +42,7 @@ function Navbar2() {
         >
           <ul>
             <li>
-              <a href="#" className="nav-links">Home</a>
+              <a href="#/" className="nav-links">Home</a>
             </li>
             <li>
               <a href="#skills" className="nav-links">Skills</a>
@@ -52,9 +51,13 @@ function Navbar2() {
               <a href="#projects" className="nav-links">Projects</a>
             </li>
             <li>
+              <a href="#certificates" className="nav-links">Certificates</a>
+            </li>
+            <li>
               <a href="#contact" className="nav-links">Contact</a>
             </li>
           </ul>
+          <a href="#contact" className="hire-me-btn">Hire Me</a>
         </nav>
         <div className="header__content__toggle">
           {!menuOpen ? (

@@ -1,168 +1,227 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Card from 'react-bootstrap/Card';
-import testPhoto from '../../images/phone.png';
 import "./stylesPages.css";
-import jsonData from '../content.json';
+
+interface Project {
+    id: number;
+    title: string;
+    description: string;
+    // image: string;
+    category: string;
+    tags: string[];
+    codeLink: string;
+    demoLink?: string;
+    featured?: boolean;
+}
 
 export default function ListOfProjectsPage() {
-    const [contentOfProject, setContentOfProject] = useState(jsonData.Fridge);
-    const [activeProject, setActiveProject] = useState(0);
+    const [activeFilter, setActiveFilter] = useState<string>('All');
 
-    const listOfProjects = [
-        { name: "Fridge" },
-        { name: "Comics reader" },
-        { name: "Android studio app" }
+    // Project data - easily add more projects here
+    const projects: Project[] = [
+        {
+            id: 1,
+            title: "Fridge Management App",
+            description: "A comprehensive app to track food items, expiration dates, and generate shopping lists. Built with React Native for cross-platform functionality.",
+            //image: "/images/fridge-app.jpg",
+            category: "Mobile",
+            tags: ["React Native", "JavaScript", "SQLite"],
+            codeLink: "https://github.com/OrangeFrodo/fridge-app",
+            demoLink: "#",
+            featured: true
+        },
+        {
+            id: 2,
+            title: "Comics Reader",
+            description: "A sleek comic book reader application with smooth page transitions, bookmark functionality, and library management.",
+            //image: "/images/comics-reader.jpg",
+            category: "Web App",
+            tags: ["React", "TypeScript", "Node.js"],
+            codeLink: "https://github.com/OrangeFrodo/comics-reader",
+            demoLink: "#"
+        },
+        {
+            id: 3,
+            title: "Android Studio Project",
+            description: "Native Android application showcasing modern Android development practices with Kotlin and Jetpack Compose.",
+            //image: "/images/android-app.jpg",
+            category: "Mobile",
+            tags: ["Kotlin", "Android", "Jetpack Compose"],
+            codeLink: "https://github.com/OrangeFrodo/android-project",
+            featured: true
+        },
+        {
+            id: 4,
+            title: "Portfolio Website",
+            description: "This very portfolio! A modern, animated website built with React, TypeScript, and Framer Motion.",
+            //image: "/images/portfolio.jpg",
+            category: "Web App",
+            tags: ["React", "TypeScript", "Framer Motion"],
+            codeLink: "https://github.com/OrangeFrodo/portfolio",
+            demoLink: "#"
+        }
     ];
 
-    const redirectToGitHub = () => {
-        window.open(contentOfProject.link, '_blank');
-    };
+    const categories = ['All', 'Web App', 'Mobile', 'Data'];
 
-    const handleProjectClick = (idx: number) => {
-        setActiveProject(idx);
-        if (idx === 0) setContentOfProject(jsonData.Fridge);
-        if (idx === 1) setContentOfProject(jsonData.Comics);
-        if (idx === 2) setContentOfProject(jsonData['Android Studio']);
-    };
+    const filteredProjects = activeFilter === 'All' 
+        ? projects 
+        : projects.filter(p => p.category === activeFilter);
 
-    const projectVariants = {
-        hidden: { opacity: 0, x: 50 },
-        visible: (custom: number) => ({
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
             opacity: 1,
-            x: 0,
             transition: {
-                delay: custom * 0.1,
-                type: "spring" as const,
-                stiffness: 100
+                staggerChildren: 0.1
             }
-        })
+        }
     };
 
     const cardVariants = {
-        initial: { opacity: 0, scale: 0.8, rotateY: -90 },
-        animate: { 
+        hidden: { opacity: 0, y: 30 },
+        visible: { 
             opacity: 1, 
-            scale: 1, 
-            rotateY: 0,
+            y: 0,
             transition: {
                 type: "spring" as const,
-                damping: 15,
                 stiffness: 100
             }
-        },
-        exit: { 
-            opacity: 0, 
-            scale: 0.8, 
-            rotateY: 90,
-            transition: { duration: 0.3 }
         }
     };
 
     return (
         <section id='projects'>
-            <div className="projects-container">
-                <motion.h1 
-                    className='section-title projects-list-projects'
-                    initial={{ opacity: 0, x: -50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+            <div className="projects-section-container">
+                {/* Header */}
+                <motion.div
+                    className="projects-header"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
                 >
-                    List of Projects
-                </motion.h1>
-                
-                <div className='projects-items'>
-                    <motion.div 
-                        className='projects-container-div-pos2'
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                    >
-                        {listOfProjects.map((item, idx) => (
-                            <motion.div 
-                                key={idx}
-                                className={`project-set pointer ${activeProject === idx ? 'active-project' : ''}`}
-                                variants={projectVariants}
-                                custom={idx}
-                                whileHover={{ 
-                                    scale: 1.05,
-                                    x: -10,
-                                    transition: { type: "spring", stiffness: 300 }
-                                }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <motion.a 
-                                    onClick={() => handleProjectClick(idx)}
-                                    style={{ cursor: 'pointer' }}
-                                >
-                                    <h1>{item.name}</h1>
-                                    <motion.div 
-                                        className="project-underline"
-                                        initial={{ scaleX: 0 }}
-                                        animate={{ scaleX: activeProject === idx ? 1 : 0 }}
-                                        transition={{ duration: 0.3 }}
-                                    />
-                                </motion.a>
-                            </motion.div>
-                        ))}
-                    </motion.div>
+                    <h1 className='section-title'>Featured Projects</h1>
+                    <p className="section-subtitle">
+                        A selection of projects that showcase my skills in building scalable, user-friendly applications.
+                    </p>
+                </motion.div>
 
-                    {/* Card with AnimatePresence for smooth transitions */}
-                    <div className='projects-card'>
-                        <AnimatePresence mode="wait">
+                {/* Filter Tabs */}
+                <motion.div 
+                    className="project-filters"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 }}
+                >
+                    {categories.map((category) => (
+                        <motion.button
+                            key={category}
+                            className={`filter-button ${activeFilter === category ? 'active' : ''}`}
+                            onClick={() => setActiveFilter(category)}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            {category}
+                        </motion.button>
+                    ))}
+                </motion.div>
+
+                {/* Projects Grid */}
+                <motion.div 
+                    className='projects-grid'
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    key={activeFilter}
+                >
+                    <AnimatePresence mode="wait">
+                        {filteredProjects.map((project) => (
                             <motion.div
-                                key={contentOfProject.header}
+                                key={project.id}
+                                className="project-card-new"
                                 variants={cardVariants}
-                                initial="initial"
-                                animate="animate"
-                                exit="exit"
+                                whileHover={{ y: -10 }}
+                                layout
                             >
-                                <Card className="bg-dark text-white phone-image project-card-enhanced">
-                                    <motion.img 
-                                        src={testPhoto}
-                                        className="project-card-image"
-                                        whileHover={{ scale: 1.05 }}
-                                        transition={{ type: "spring" }}
-                                    />
-                                    <Card.Body className="project-card-body">
-                                        <motion.div
-                                            initial={{ opacity: 0, y: 20 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: 0.2 }}
-                                        >
-                                            <Card.Title className="project-card-title">
-                                                {contentOfProject.header}
-                                            </Card.Title>
-                                            <Card.Text className="project-card-text">
-                                                {contentOfProject.content}
-                                            </Card.Text>
+                                {/* Project Image */}
+                                <div className="project-image-container">
+                                    {/* <img 
+                                        src={project.image} 
+                                        alt={project.title}
+                                        className="project-image"
+                                        onError={(e) => {
+                                            e.currentTarget.src = 'https://via.placeholder.com/600x400/12182b/FF9800?text=' + encodeURIComponent(project.title);
+                                        }}
+                                    /> */}
+                                    <div className="project-overlay">
+                                        <div className="project-badges">
+                                            {project.category && (
+                                                <span className="category-badge">{project.category}</span>
+                                            )}
+                                            {project.featured && (
+                                                <span className="featured-badge">⭐ Featured</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
 
-                                            <motion.button
-                                                className="github-button"
-                                                onClick={redirectToGitHub}
-                                                whileHover={{ 
-                                                    scale: 1.05,
-                                                    boxShadow: "0 5px 15px rgba(101, 83, 255, 0.4)"
-                                                }}
+                                {/* Project Content */}
+                                <div className="project-content">
+                                    <h3 className="project-title-new">{project.title}</h3>
+                                    <p className="project-description-new">{project.description}</p>
+
+                                    {/* Technology Tags */}
+                                    <div className="project-tags">
+                                        {project.tags.map((tag, idx) => (
+                                            <span key={idx} className="project-tag">{tag}</span>
+                                        ))}
+                                    </div>
+
+                                    {/* Action Buttons */}
+                                    <div className="project-actions">
+                                        <motion.a
+                                            href={project.codeLink}
+                                            className="project-button button-outline"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
+                                        >
+                                            <span className="button-icon">💻</span>
+                                            Code
+                                        </motion.a>
+                                        {project.demoLink && (
+                                            <motion.a
+                                                href={project.demoLink}
+                                                className="project-button button-primary"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                whileHover={{ scale: 1.05 }}
                                                 whileTap={{ scale: 0.95 }}
                                             >
-                                                <span>View on GitHub</span>
-                                                <motion.span
-                                                    className="arrow-icon"
-                                                    initial={{ x: 0 }}
-                                                    whileHover={{ x: 5 }}
-                                                >
-                                                    →
-                                                </motion.span>
-                                            </motion.button>
-                                        </motion.div>
-                                    </Card.Body>
-                                </Card>
+                                                <span className="button-icon">🚀</span>
+                                                Live Demo
+                                            </motion.a>
+                                        )}
+                                    </div>
+                                </div>
                             </motion.div>
-                        </AnimatePresence>
-                    </div>
-                </div>
+                        ))}
+                    </AnimatePresence>
+                </motion.div>
+
+                {/* Show message if no projects */}
+                {filteredProjects.length === 0 && (
+                    <motion.div 
+                        className="no-projects"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                    >
+                        <p>No projects in this category yet.</p>
+                    </motion.div>
+                )}
             </div>
         </section>
     );
