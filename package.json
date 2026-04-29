@@ -11,6 +11,7 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@types/react-router-hash-link": "^2.4.9",
+    "framer-motion": "^12.38.0",
     "gsap": "^3.12.5",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",

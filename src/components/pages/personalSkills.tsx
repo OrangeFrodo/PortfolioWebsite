@@ -1,27 +1,38 @@
 import React from 'react';
 
-export default function PersonalSkills(props: { name: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; level: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; }) {
+export default function PersonalSkills(props: { name: string; level: string }) {
+    const cardStyle: React.CSSProperties = {
+        background: 'rgba(20, 20, 20, 0.6)',
+        border: '1px solid rgba(101, 83, 255, 0.3)',
+        borderRadius: '12px',
+        padding: '1.5rem',
+        textAlign: 'center',
+        transition: 'all 0.3s ease',
+        backdropFilter: 'blur(10px)'
+    };
 
-    const divStyle = {
-        display: "inline",
-    }
-
-    const nameStyle = {
+    const nameStyle: React.CSSProperties = {
         color: "white",
-    }
+        fontSize: '1.3rem',
+        margin: '0 0 0.5rem 0',
+        fontWeight: 600
+    };
 
-    const levelStyle = {
+    const levelStyle: React.CSSProperties = {
         color: "#6553FF",
-    }
+        fontSize: '1rem',
+        margin: 0,
+        fontWeight: 500
+    };
 
     return (
-        <div className='ps'>
-            <h1 style={nameStyle}>
+        <div className='ps personal-skill-card' style={cardStyle}>
+            <h3 style={nameStyle}>
                 {props.name}
-            </h1>
-            <h2 style={levelStyle}>
+            </h3>
+            <p style={levelStyle}>
                 {props.level}
-            </h2>
+            </p>
         </div>
     );
 }
