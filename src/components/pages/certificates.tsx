@@ -20,8 +20,8 @@ export default function Certificates() {
         {
             name: "AWS Certified Cloud Practitioner",
             issuer: "Amazon Web Services",
-            date: "Month 2024",
-            credentialId: "ID: AWS-CCP-2024",
+            date: "March 2025",
+            credentialId: "ID: AWS-CCP-2025",
             description: "Foundational understanding of AWS Cloud, services, and terminology.",
             tags: ["Cloud", "AWS", "Infrastructure"],
             link: "https://www.credly.com/badges/a65d69c8-22e4-4484-bd3f-ab5f473f4a6a/linked_in_profile",
@@ -31,7 +31,7 @@ export default function Certificates() {
         {
             name: "Microsoft Certified: Azure Fundamentals",
             issuer: "Microsoft",
-            date: "Month 2024",
+            date: "May 2025",
             credentialId: "ID: F9F3EFE74C510407",
             description: "Foundational knowledge of cloud services and how they are provided with Microsoft Azure.",
             tags: ["Cloud", "Azure", "Microsoft"],
@@ -44,7 +44,7 @@ export default function Certificates() {
     const stats = [
         { label: "Certifications", value: "2" },
         { label: "Organizations", value: "2" },
-        { label: "Latest Year", value: "2024" }
+        { label: "Latest Year", value: "2025" }
     ];
 
     const containerVariants = {

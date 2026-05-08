@@ -106,7 +106,7 @@ function HeroSection() {
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: 1.5, type: "spring" }}
                             >
-                                "unemployed"
+                                "Operations Engineer"
                             </motion.h2>
                         </div>
                     </motion.div>

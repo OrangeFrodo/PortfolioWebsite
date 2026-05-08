@@ -2,6 +2,9 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import "./stylesPages.css";
 
+// Get your free access key at https://web3forms.com
+const WEB3FORMS_ACCESS_KEY = "49fcabb2-0d63-447d-b9c6-cb82f31eae99";
+
 export default function Contact() {
     const [formData, setFormData] = useState({
         name: '',
@@ -9,16 +12,40 @@ export default function Contact() {
         subject: '',
         message: ''
     });
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const myEmail = "daxoja@gmail.com"; // TODO: Update with your actual email
-
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Create mailto link with form data
-        const mailtoLink = `mailto:${myEmail}?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
-            `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-        )}`;
-        window.location.href = mailtoLink;
+        setStatus('loading');
+        setErrorMessage('');
+
+        try {
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    access_key: WEB3FORMS_ACCESS_KEY,
+                    name: formData.name,
+                    email: formData.email,
+                    subject: formData.subject,
+                    message: formData.message,
+                }),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                setStatus('success');
+                setFormData({ name: '', email: '', subject: '', message: '' });
+            } else {
+                setStatus('error');
+                setErrorMessage(result.message || 'Something went wrong. Please try again.');
+            }
+        } catch {
+            setStatus('error');
+            setErrorMessage('Network error. Please check your connection and try again.');
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -70,7 +97,7 @@ export default function Contact() {
                             </div>
                             <div>
                                 <p className="info-label">Email</p>
-                                <p className="info-value">{myEmail}</p>
+                                <p className="info-value">daxoja@gmail.com</p>
                             </div>
                         </motion.div>
 
@@ -109,7 +136,7 @@ export default function Contact() {
                                     </svg>
                                 </motion.a>
                                 <motion.a
-                                    href="www.linkedin.com/in/jakub-daxner-716039235"
+                                    href="https://www.linkedin.com/in/jakub-daxner-716039235"
                                     className="social-icon"
                                     whileHover={{ y: -3 }}
                                     target="_blank"
@@ -186,17 +213,58 @@ export default function Contact() {
                             ></textarea>
                         </div>
 
+                        {status === 'success' && (
+                            <motion.div
+                                className="form-success"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                            >
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                    <polyline points="22 4 12 14.01 9 11.01" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                                Message sent! I'll get back to you within 24 hours.
+                            </motion.div>
+                        )}
+
+                        {status === 'error' && (
+                            <motion.div
+                                className="form-error"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                            >
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <circle cx="12" cy="12" r="10" strokeWidth="2"/>
+                                    <line x1="12" y1="8" x2="12" y2="12" strokeWidth="2" strokeLinecap="round"/>
+                                    <line x1="12" y1="16" x2="12.01" y2="16" strokeWidth="2" strokeLinecap="round"/>
+                                </svg>
+                                {errorMessage}
+                            </motion.div>
+                        )}
+
                         <motion.button
                             type="submit"
                             className="submit-button"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
+                            whileHover={{ scale: status === 'loading' ? 1 : 1.02 }}
+                            whileTap={{ scale: status === 'loading' ? 1 : 0.98 }}
+                            disabled={status === 'loading'}
                         >
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <line x1="22" y1="2" x2="11" y2="13" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                <polygon points="22 2 15 22 11 13 2 9 22 2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                            </svg>
-                            Send Message
+                            {status === 'loading' ? (
+                                <>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="spin">
+                                        <path d="M21 12a9 9 0 1 1-6.219-8.56" strokeWidth="2" strokeLinecap="round"/>
+                                    </svg>
+                                    Sending...
+                                </>
+                            ) : (
+                                <>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <line x1="22" y1="2" x2="11" y2="13" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                        <polygon points="22 2 15 22 11 13 2 9 22 2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                    </svg>
+                                    Send Message
+                                </>
+                            )}
                         </motion.button>
                     </motion.form>
                 </div>

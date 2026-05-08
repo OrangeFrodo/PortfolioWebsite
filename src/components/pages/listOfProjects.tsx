@@ -9,8 +9,8 @@ interface Project {
     // image: string;
     category: string;
     tags: string[];
-    codeLink: string;
-    demoLink?: string;
+    // codeLink: string;
+    // demoLink?: string;
     featured?: boolean;
 }
 
@@ -26,8 +26,8 @@ export default function ListOfProjectsPage() {
             //image: "/images/fridge-app.jpg",
             category: "Mobile",
             tags: ["React Native", "JavaScript", "SQLite"],
-            codeLink: "https://github.com/OrangeFrodo/fridge-app",
-            demoLink: "#",
+            // codeLink: "https://github.com/OrangeFrodo/fridge-app",
+            // demoLink: "#",
             featured: true
         },
         {
@@ -37,8 +37,8 @@ export default function ListOfProjectsPage() {
             //image: "/images/comics-reader.jpg",
             category: "Web App",
             tags: ["React", "TypeScript", "Node.js"],
-            codeLink: "https://github.com/OrangeFrodo/comics-reader",
-            demoLink: "#"
+            // codeLink: "https://github.com/OrangeFrodo/comics-reader",
+            // demoLink: "#"
         },
         {
             id: 3,
@@ -47,7 +47,7 @@ export default function ListOfProjectsPage() {
             //image: "/images/android-app.jpg",
             category: "Mobile",
             tags: ["Kotlin", "Android", "Jetpack Compose"],
-            codeLink: "https://github.com/OrangeFrodo/android-project",
+            // codeLink: "https://github.com/OrangeFrodo/android-project",
             featured: true
         },
         {
@@ -57,8 +57,16 @@ export default function ListOfProjectsPage() {
             //image: "/images/portfolio.jpg",
             category: "Web App",
             tags: ["React", "TypeScript", "Framer Motion"],
-            codeLink: "https://github.com/OrangeFrodo/portfolio",
-            demoLink: "#"
+            // codeLink: "https://github.com/OrangeFrodo/portfolio",
+            // demoLink: "#"
+        },
+                {
+            id: 5,
+            title: "Personalized AI Chatbot",
+            description: "An AI-powered chatbot that provides personalized responses based on user interactions, leveraging natural language processing techniques. With own architecture deployable on AWS and integration of the latest Claude model for enhanced conversational capabilities.",
+            //image: "/images/ai-chatbot.jpg",
+            category: "Web App",
+            tags: ["React", "TypeScript", "Node.js", "AI", "Claude"],
         }
     ];
 
@@ -180,7 +188,7 @@ export default function ListOfProjectsPage() {
                                     </div>
 
                                     {/* Action Buttons */}
-                                    <div className="project-actions">
+                                    {/* <div className="project-actions">
                                         <motion.a
                                             href={project.codeLink}
                                             className="project-button button-outline"
@@ -205,7 +213,7 @@ export default function ListOfProjectsPage() {
                                                 Live Demo
                                             </motion.a>
                                         )}
-                                    </div>
+                                    </div> */}
                                 </div>
                             </motion.div>
                         ))}
